@@ -11,9 +11,9 @@ import (
 //Paginator for page use
 type Paginator struct {
 	TotalCount int64 //`json:"total_record"`
-	TotalPage  int32 // `json:"total_page"`
-	Page       int32 //`json:"page"`
-	PageSize   int32 //`json:"prev_page"`
+	TotalPage  int64 // `json:"total_page"`
+	Page       int64 //`json:"page"`
+	PageSize   int64 //`json:"page_size"`
 }
 
 // DoPage ip
@@ -45,7 +45,7 @@ func Page(table *gorm.DB, p *Paginator, list interface{}, order []string) error 
 		log.Errorf("Query countRecords %v", err)
 		return err
 	}
-	p.TotalPage = int32(math.Ceil(float64(p.TotalCount) / float64(p.PageSize)))
+	p.TotalPage = int64(math.Ceil(float64(p.TotalCount) / float64(p.PageSize)))
 	if p.TotalPage < p.Page {
 		p.Page = p.TotalPage
 	}
